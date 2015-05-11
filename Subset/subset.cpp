@@ -42,7 +42,7 @@ class Solution{
 			{
 				sort((*it).begin(),(*it).end());
 			}
-			display_vec(combin);
+		
 			return combin;
 		}
 };
