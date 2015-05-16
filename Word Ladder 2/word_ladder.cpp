@@ -8,16 +8,9 @@ class Solution {
 public:
 	bool is_candidate(string w1,string w2){
 		int count=0;
-		int length;
+		int length=w1.size();
 		if(w1==w2)
 			return false;
-		if(w1.size()-w2.size()>1)
-		       return false;	
-		else if(w1.size()<w2.size())
-			length=w1.size();
-		else
-			length=w2.size();
-
 
 		for(int i=0;i<length;i++)
 			if(w1[i]!=w2[i])
@@ -41,7 +34,73 @@ public:
 		return res;
 	}
 
-	vector<vector<string> > findLadders(string start, string end, unordered_set<string> &dict) {
+	vector<vector<string> > DFS(vector<string> vec,string end,unordered_set<string> dict,int limit){
+		vector<vector<string> > res;
+		/*if(vec.size()>limit)
+		{
+			cout<<vec.size()<<" "<<limit<<endl;
+			return res;
+		}*/
+		
+		string word=vec.back();
+		vector<string> candidates=candidates_words(word,dict);
+		for(string x: candidates){
+			vec.push_back(x);
+			dict.erase(x);
+			if(is_candidate(x,end)) //find the result
+			{	
+				vec.push_back(end);
+				res.push_back(vec);
+			}
+			else
+			{
+				auto sub_result=DFS(vec,end,dict,limit);
+				res.insert(res.end(),sub_result.begin(),sub_result.end());
+			}
+			vec.pop_back();
+			dict.insert(x);
+
+		}
+		return res;
+
+
+
+	}
+	int BFS(string start,string end,unordered_set<string> &dict){
+		deque< vector<string> > search_queue;
+		vector<string> init;
+		init.push_back(start);
+		search_queue.push_back(init);
+		while(!search_queue.empty()){
+			vector<string> vec=search_queue.front();
+			string word=vec.back();
+			search_queue.pop_front();
+			vector<string> candidates=candidates_words(word,dict);
+			for(auto x: candidates){
+				if(is_candidate(x,end)){
+					return vec.size();
+				}
+				else{
+					vec.push_back(x);
+					search_queue.push_back(vec);
+					vec.pop_back();
+				}
+			}
+
+		}
+
+
+	}
+	vector<vector<string> > findLadders2(string start,string end,unordered_set<string> &dict){
+		vector<string > init;
+		init.push_back(start);
+		int limit=BFS(start,end,dict);
+		//cout<<limit<<endl;
+		return DFS(init,end,dict,limit);
+
+	}
+	
+	vector<vector<string> > findLadders1(string start, string end, unordered_set<string> &dict) {
 		vector<vector<string> >  res;
 		deque< vector<string> > search_queue;
 		vector<string> init;
@@ -94,7 +153,7 @@ int main()
 	string start = "hit";
 	string end = "cog";
 	unordered_set<string> dict({"hot","dot","dog","lot","log"});
-	auto result=sol->findLadders(start,end,dict);
+	auto result=sol->findLadders2(start,end,dict);
 	for(auto x:result){
 		for(auto y:x)
 			cout<<y<<" ";
