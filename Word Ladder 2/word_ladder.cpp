@@ -3,9 +3,11 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 using namespace std;
 class Solution {
 public:
+	unordered_map<string,vector<string> > Adjacent;
 	bool is_candidate(string w1,string w2){
 		int count=0;
 		int length=w1.size();
@@ -22,17 +24,30 @@ public:
 		return true;
 	}
 
-	vector<string> candidates_words(string word, unordered_set<string> &dict)
-	{//return all possible word as a vector
+	/*vector<string> candidates_words(string word, unordered_set<string> &dict)
+	{//return all possible word as a vector		
+		return Adjacent[word];
+	}*/
+	vector<string> candidates_words(string word ,unordered_set<string> dict)
+	{
 		vector<string> res;
-		for(auto dict_word: dict)
+		for(int i=0;i<word.size();i++)
 		{
-			if(is_candidate(dict_word,word))
-				res.push_back(dict_word);
-
+			char tmp=word[i];
+			for(char c='a';c<='z';c++)
+			{
+				if(c==tmp)
+					continue;
+				word[i]=c;
+				//cout<<word<<endl;
+				if(dict.find(word)!=dict.end())
+					res.push_back(word);
+			}
+			word[i]=tmp;
 		}
 		return res;
 	}
+
 
 	vector<vector<string> > DFS(vector<string> vec,string end,unordered_set<string> dict,int limit){
 		vector<vector<string> > res;
@@ -99,6 +114,17 @@ public:
 		return DFS(init,end,dict,limit);
 
 	}
+
+	void Build_Map(unordered_set<string> dict,string start,string end){
+		dict.insert(start);
+		dict.insert(end);
+		for(auto x : dict)
+			for(auto y:dict){
+				if(is_candidate(x,y))
+					Adjacent[x].push_back(y);
+			}
+	}
+		
 	
 	vector<vector<string> > findLadders1(string start, string end, unordered_set<string> &dict) {
 		vector<vector<string> >  res;
@@ -107,7 +133,7 @@ public:
 		init.push_back(start);
 		search_queue.push_back(init);
 		int found_length=99999999;
-		
+				
 		while(!search_queue.empty()){
 			vector<string> first_element=search_queue.front();
 			search_queue.pop_front();
@@ -115,13 +141,17 @@ public:
 				break;
 			string word=first_element.back();
 			vector<string> candidates=candidates_words(word,dict);
-
+			/*cout<<"cand"<<endl;
+			for(string x: candidates){
+				cout<<x<<" ";
+			}
+			cout<<endl;*/
 			for(auto cand_word: candidates){
 				vector<string> new_element=first_element;
 				new_element.push_back(cand_word);
-				//for(auto x: new_element)
-				//	cout<<x<<" ";
-				//cout<<endl;
+				/*for(auto x: new_element)
+					cout<<x<<" ";
+				cout<<endl;*/
 				if(is_candidate(cand_word,end))
 				{
 					
@@ -150,10 +180,10 @@ int main()
 {
 	Solution *sol= new Solution;
 	//string init[]={"hot","dot","dog","lot","log"};
-	string start = "hit";
-	string end = "cog";
-	unordered_set<string> dict({"hot","dot","dog","lot","log"});
-	auto result=sol->findLadders2(start,end,dict);
+	string start = "hot";
+	string end = "dog";
+	unordered_set<string> dict({"hot","dog","dog"});
+	auto result=sol->findLadders1(start,end,dict);
 	for(auto x:result){
 		for(auto y:x)
 			cout<<y<<" ";
