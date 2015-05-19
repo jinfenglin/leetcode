@@ -7,46 +7,46 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-	    int counter=0;
-	    vector<vector<int> > result;
-	    for(int x:nums){	    	
-    		    vector<vector<int> > sub_result=TwoSum(nums,-x,counter);
-		    for(auto each:sub_result){
-		    	if(!count(result.begin(),result.end(),each))
-				result.push_back(each);
-		    }		    
-		    counter+=1;		    
+    	    vector<vector<int> > result;
+	    unordered_map<int,int> map_nums;
+	    for(int x:nums)
+		    map_nums[x]++;
+	    for(pair<int,int> x:map_nums){
+		    int rest=-x.first;
+		    //x.second--;
+		    map_nums[x.first]--;
+		    
+		    unordered_map<int,int> cp_map_nums=map_nums;
+		    for(auto y:cp_map_nums)
+		    {
+			    if(y.second<=0)
+				    continue;
+			    int comp=rest-y.first;
+			    cp_map_nums[y.first]--;
+			    if(cp_map_nums.find(comp)!=cp_map_nums.end() and cp_map_nums[comp]>0)
+			    {
+				    cp_map_nums[comp]--;
+				    cp_map_nums[y.first]--;
+				    vector<int> temp;
+				    temp.push_back(x.first);
+				    temp.push_back(comp);
+				    temp.push_back(y.first);
+				    sort(temp.begin(),temp.end());
+				    if(find(result.begin(),result.end(),temp)==result.end())
+				    	result.push_back(temp);
+			    }
+			    //y.second++;
+			    cp_map_nums[y.first]++;
+		    }
+		    //x.second++;
+		    map_nums[x.first]++;
 	    }
 	    return result;
-    }
-    vector< vector<int>>TwoSum(vector<int> nums,int target,int forbid){
-	    unordered_map<int,int> map;
-	    vector<vector<int> > result; 
-	    for(int i=0;i<nums.size();i++){
-		    if(i==forbid)
-			    continue;
-		    vector<int> temp_result;
-		    int complement=target-nums[i];
-		    if(map[complement]){
-			    map[complement]--;
-			    temp_result.push_back(nums[i]);
-			    temp_result.push_back(complement);
-			    temp_result.push_back(-target);
-			    sort(temp_result.begin(),temp_result.end());
-			    result.push_back(temp_result);
-		    }
-		    else{
-			    map[nums[i]]++;
-		    }
-	    }
-	    return result;
-
-
     }
 };
 int main(){
 	Solution *sol=new Solution;
-	vector<int> init={-1,0,1,2,-1,-4};
+	vector<int> init={3,0,-2,-1,1,2};
 	auto result=sol->threeSum(init);
 	for(auto x:result){
 		{
