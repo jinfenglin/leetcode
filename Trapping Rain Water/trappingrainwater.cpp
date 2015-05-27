@@ -14,7 +14,7 @@ class Solution {
 					water+=start-small_hill.top();
 				small_hill.pop();
 			}
-			cout<<water<<endl;
+			//cout<<water<<endl;
 			return water;
 		};
 		int trap(vector<int>& height) {
@@ -32,7 +32,7 @@ class Solution {
 					continue;
 				}
 				stack<int> small_hill;
-				if(height[i]>bottom){
+				if(height[i]>=bottom){
 					while(!hill.empty()){
 						small_hill.push(hill.top());
 						hill.pop();
@@ -55,8 +55,8 @@ class Solution {
 };
 int main(){
 	Solution *sol= new Solution;
-	vector<int> init={0,1,0,2,1,0,1,3,2,1,2,1};
+	//vector<int> init={0,1,0,2,1,0,1,3,2,1,2,1};
 	//vector<int> init={0,1,0,2,1,0,1,3};
-	//vector<int> init={};
+	vector<int> init={2,0,2};
 	cout<<sol->trap(init)<<endl;
 }
