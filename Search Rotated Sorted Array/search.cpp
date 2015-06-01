@@ -15,18 +15,19 @@ class Solution {
 
 			while(start<end){
 				int mid=(start+end)/2;
+				
+				if(start+1==end)
+					if(nums[start]>nums[end])
+						return start;
+					else
+						return end;
+
 				if(nums[start]>nums[mid]){
 					end=mid;
 				}else if(nums[start]<nums[mid]){
 					start=mid;
-				}else{
-					if(start+1==end)
-						if(nums[start]>nums[end])
-							return start;
-						else
-							return end;
-						
 				}
+				
 			}
 			//return start;
 		}
@@ -62,7 +63,7 @@ class Solution {
 int main(){
 	Solution *sol=new Solution;
 	//vector<int> init={3,5,1};
-	vector<int> init={4,6,7,0,1,2};
+	vector<int> init={1,1,3};
 	//cout<<sol->find_pivot(init)<<endl;
-	cout<<sol->search(init,1)<<endl;
+	cout<<sol->search(init,3)<<endl;
 }
