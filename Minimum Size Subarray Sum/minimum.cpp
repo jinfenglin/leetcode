@@ -5,33 +5,31 @@ using namespace std;
 class Solution {
 	public:
 		int minSubArrayLen(int s, vector<int>& nums) {
-			int n=nums.size()-1;
-			int count=0;
-			//int **array=(int **)malloc(sizeof(int *) * n);
-			int *array[n];
-			for(int i=0;i<=n;i++){
-				array[i]=(int *)malloc(sizeof(int)*n);
-			}		
-			for(int i=0;i<=n;i++)
-			{
-				array[i][0]=nums[i];
-			}
-	
-			for(int i=n;i>=0;i--)
-			{
-				for(int j=1;j<=n-i;j++){
-					array[i][j]=array[i][j-1]+array[i+j][0];
-					if(array[i][j]>=s)
-						if(count==0 or j<count)
-							count=j;
+			int left=0;
+			int right=0;
+			int sum=0;
+			int res=nums.size()+1;
+			while(right<nums.size()){
+				while(sum<s and right<nums.size())
+				{
+					sum+=nums[right];
+					right++;
+				}
+			
+				while(sum>=s){
+				        if(right-left<res and sum>=s)
+						res=right-left;
+
+					sum-=nums[left];
+					left++;
 				}
 			}
-			return count+1;
+			return res>nums.size()? 0:res;
 		}
 };
 int main(){
-	vector<int> init={10,5,13,4,8,4,5,11,14,9,16,10,20,8};
+	vector<int> init={1,2,3,4,5};
 	Solution *sol=new Solution;
-	cout<<sol->minSubArrayLen(80,init)<<endl;
+	cout<<sol->minSubArrayLen(11,init)<<endl;
 	//cout<<sol->minSubArrayLen(7,init)<<endl;
 }
