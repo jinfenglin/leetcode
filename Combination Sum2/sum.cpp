@@ -4,51 +4,43 @@
 using namespace std;
 class Solution {
 public:
-	void combine(vector<int>& candidates,map<int,int> &counter,int target,int start,vector<vector<int> > &result, vector<int> &solution){
-		if(target<=0)
-			return ;
-		/*for(auto x:solution)
+    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+        vector<vector<int> > result;
+        sort(num.begin(), num.end());
+        combHelper(num, 0, num.size(), target, vector<int>(), result);
+        return result;
+    }
+
+    void combHelper(vector<int>& a, int start, int n, int target, 
+    vector<int> cur_vec, vector<vector<int> >& result) {
+
+        if (target == 0) {
+            result.push_back(cur_vec);
+            return;
+        }
+        int i = start;
+        while(i < n  && target-a[i] >= 0) {
+            // NOTE : this condition helps neglecting making identical sets
+            //  this is the catch of this question
+            if (i == start || a[i] != a[i-1]) {
+                cur_vec.push_back(a[i]);
+		cout<<"i:i-1="<<i<<" "<<i-1<<endl;
+		cout<<"a[i]:a[i-1] "<<a[i]<<" "<<a[i-1]<<endl;
+		for(auto x:cur_vec)
 			cout<<x<<" ";
-		cout<<endl;*/
-		for(int i=start;i<candidates.size();i++){
-			int cur=candidates[i];
-			if(counter[cur]<=0)
-				continue;
-			counter[cur]--;	
-			solution.push_back(cur);
-			if(cur==target)
-				result.emplace_back(solution);
-			else
-				combine(candidates,counter,target-cur,i,result,solution);
-			solution.pop_back();
-			counter[cur]++;
-		}
-	}
-    	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-		map<int,int> mp;
-		int last=-1;
-		vector<int> new_candidates;
-		sort(candidates.begin(),candidates.end());
-		for(int x:candidates){
-			if(x!=last )
-			{
-				new_candidates.push_back(x);
-			}
-			last=x;
-			mp[x]++;
-		}
-		vector<vector<int> > res;
-		vector<int> solution;
-		combine(new_candidates,mp,target,0,res,solution);
-		return res;
-        
-    	}
+		cout<<endl;
+                combHelper(a, i+1, n, target-a[i], cur_vec, result);
+                cur_vec.pop_back();
+            }
+            i++;
+        }
+    }
 };
 
 int main(){
-	vector<int> init={10,1,2,7,6,1,5};
+	vector<int> init={1,1,1};
 	Solution *sol=new Solution;
-	auto res=sol->combinationSum2(init,8);
+	auto res=sol->combinationSum2(init,3);
 	for(auto x :res){
 		for(auto y:x){
 			cout<<y<<" ";
