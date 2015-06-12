@@ -6,44 +6,28 @@
 using namespace std;
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-    	    vector<vector<int> > result;
-	    unordered_map<int,int> map_nums;
-	    for(int x:nums)
-		    map_nums[x]++;
-	    for(pair<int,int> x:map_nums){
-		    int rest=-x.first;
-		    //x.second--;
-		    map_nums[x.first]--;
-		    
-		    unordered_map<int,int> cp_map_nums=map_nums;
-		    for(auto y:cp_map_nums)
-		    {
-			    if(y.second<=0)
-				    continue;
-			    int comp=rest-y.first;
-			    cp_map_nums[y.first]--;
-			    if(cp_map_nums[comp]>0)
-			    {
-				    cp_map_nums[comp]=-1;
-				    cp_map_nums[y.first]=-1;
-				    map_nums[x.first]=-1;
-				    vector<int> temp(3,0);
-				    temp[0]=x.first;
-				    temp[1]=comp;
-				    temp[2]=y.first;
-				    sort(temp.begin(),temp.end());
-				    //if(find(result.begin(),result.end(),temp)==result.end())
-				    result.push_back(temp);
-			    }
-			    //y.second++;
-			    cp_map_nums[y.first]++;
-		    }
-		    //x.second++;
-		    map_nums[x.first]++;
-	    }
-	    return result;
-    }
+	void select(int k,int n,vector<int> nums,vector<int> &solution,vector<vector<int> > &result,int start){
+		if(k==0 and n==0)
+			result.push_back(solution);
+		else if(k<0)
+			return;
+		for(int i=start;i<nums.size();i++){
+			if(i==start or nums[i]!=nums[i-1]){
+				solution.push_back(nums[i]);
+				select(k-1,n+nums[i],nums,solution,result,i+1);
+				solution.pop_back();
+			}
+		}
+	}
+    	vector<vector<int>> threeSum(vector<int>& nums) {
+		sort(nums.begin(),nums.end());
+		vector<int> solution;
+		vector<vector<int> >result;
+		select(3,0,nums,solution,result,0);
+		return result;
+		
+
+	}
 };
 int main(){
 	Solution *sol=new Solution;
