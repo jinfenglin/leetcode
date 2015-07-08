@@ -4,37 +4,43 @@ using namespace std;
 
 class Solution {
 	public:
-		bool match(string s,int s_cur,string p,int p_cur){
-			if(s_cur>=s.size()){
-				if(p_cur==p.size()-2 or p_cur==p.size())
-					return true;
-				else
-					return false;
-			}
-			if(p[p_cur+1]!='*'){
-				if(p[p_cur]==s[s_cur] or p[p_cur]=='.')
-					return match(s,s_cur+1,p,p_cur+1);
-				else
-					return false;
-			}else{			
-				if(p[p_cur]==s[s_cur] or p[p_cur=='.'])
-					if(!match(s,s_cur+1,p,p_cur))
-						return match(s,s_cur,p,p_cur+2);
-					else
-						return true;
-				else
-					return match(s,s_cur,p,p_cur+2);
+		bool isMatch(string s, string p) {
+			int s_len=s.size();
+			int p_len=p.size();
+			bool dp[p_len+1][s_len+1];
+			dp[0][0]=true;
+			for(int j=1;j<s_len+1;j++)
+				dp[0][j]=false;
+			for(int i=1;i<p_len+1;i++){
+				cout<<"i:"<<i<<" ";
+				for(int j=0;j<s_len+1;j++){
+					if(p[i-1]=='*'){
+						if(i>1)
+							if(j==0)
+								dp[i][j]=dp[i-2][j]; //s is empty only when this * match nothing then it is possible
+							else 
+								dp[i][j]=((s[j-1]==p[i-2] or p[i-2]=='.') and dp[i][j-1]) /*or (dp[i-1][j-1])*/ or (dp[i-2][j]);
+						else // * could not be the first symbol
+							return 0;						
+					}else{
+						if(j==0)
+							dp[i][j]=false;
+						else
+							dp[i][j]=dp[i-1][j-1] and( p[i-1]=='.' or p[i-1]==s[j-1]);
+					
+					}
+					cout<<dp[i][j]<<" "; 
+					
+				}
+				cout<<endl;
 			}
 
-		}
-		bool isMatch(string s, string p) {
-			return match(s,0,p,0);
-			
+			return dp[p_len][s_len];			
 		}
 };
 int main(){
-	string s="cabbccaccabacccbaa";
-	string p="b*b*c*b*b*c*.c*.*c";
+	string s="aab";
+	string p="c*a*c";
 	Solution *sol=new Solution;
 	cout<<sol->isMatch(s,p)<<endl;
 
