@@ -10,9 +10,10 @@ public class Solution {
 	    List<Integer> res=new LinkedList<Integer>();
 	    if(root==null)
 		    return res;
-	    res.add(root.val);
 	    res.addAll(preorderTraversal(root.left));
 	    res.addAll(preorderTraversal(root.right));
+	    res.add(root.val);
+
 	    return res;
     }
 }
