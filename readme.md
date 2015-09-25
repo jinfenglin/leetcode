@@ -13,6 +13,7 @@ SLOW:
 -Palindrome partion(because keep copys of failed searching)
 -Insertion sort, logic is a chaose, make 3 condition more clear.
 -Populating Next Right Pointers in Each Node II(I used recursion)
+-Word Search 2(Using trie tree, while should integrate the search process with this function)
 
 Not PASS:
 -Word Break 2. Using DP+Backtracing, TLE for some reason
