@@ -1,5 +1,5 @@
 Contains Solutions for leetcode. All case tested and accepted except:
--Wordladder
+-Wordladder(need to build the graph first, simply bit flipping don't work)
 -3Sum
 -Insert Interval (TLE, it is O(n) algorithm but need to avoid merging for every interval)
 
