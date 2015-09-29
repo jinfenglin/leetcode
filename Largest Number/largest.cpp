@@ -9,6 +9,7 @@ class Solution {
 				num_string.push_back(to_string(num));
 			}
 			sort(num_string.begin(),num_string.end(),[](const string &m,const string &n){ return m+n > n+m; });
+
 			for(string str:num_string){
 				res+=str;
 			}
