@@ -6,6 +6,7 @@ Contains Solutions for leetcode. All case tested and accepted except:
 Blur Logic:
 SortList(have difficulties to deal with link relation between nodes, the solution is not elegant enough)
 Buy and sell stock 4
+Basic Cal(It is unbelievable that such a simple problem takes so much time)
 
 SLOW:
 -Combination Sum
