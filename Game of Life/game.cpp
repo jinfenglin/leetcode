@@ -10,7 +10,7 @@ class Solution {
 			for(int m=i-1;m<=i+1;m++)
 				for(int n=j-1;n<=j+1;n++){
 					if(m<x and m>=0 and n<y and n>=0 and !(m==i and n==j))
-						count+= board[i][j]==1 or board[i][j]==-1;
+						count+= board[m][n]==1 or board[m][n]==-1;
 				}
 			if(board[i][j]==1){
 				if(count<2)
