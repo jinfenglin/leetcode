@@ -1,18 +1,14 @@
-#include<iostream>
-using namespace std;
-
 class Solution {
 	public:
-		int hIndex(vector<int>& citationss) {
-			sort(citationss.begin(),citationss.end());
-			citationss.insert(0,0);
-			for(int i=citationss.size()-1;i>0;i--){
-				if(citationss[i-1]<citationss.size()-i)		
-					return citationss.size()-i;		
-			}
-			
-			return 0;
+		int hIndex(vector<int>& citations) {
+		    if(citations.size()==0)
+		        return 0;
+			sort(citations.begin(),citations.end(),greater<int>());
+			int i=0;
+			for(;i<citations.size();i++)
+				if(citations[i]<i+1)
+					break;
+			return i;
 		}
+			
 };
-int main(){
-}
