@@ -17,6 +17,7 @@ SLOW:
 -Populating Next Right Pointers in Each Node II(I used recursion)
 -Word Search 2(Using trie tree, while should integrate the search process with this function)
 -different ways to add parentheses
+-merge k list(merge sort is faster)
 
 Not PASS:
 -Word Break 2. Using DP+Backtracing, TLE for some reason
