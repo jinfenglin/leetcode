@@ -25,8 +25,7 @@ class Solution {
 				}
 			}
 			swap(nums[partition_index],nums[change_index]);
-			reverse(nums.begin()+partition_index+1,nums.end());
-			
+			reverse(nums.begin()+partition_index+1,nums.end());	
 		}
 };
 
