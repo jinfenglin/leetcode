@@ -1,7 +1,8 @@
 public class Solution {
 	public int nthUglyNumber(int n) {
-		int c1=1,c2=1,c3=1;
+		int c1=0,c2=0,c3=0;
 		List<Integer> uglys=new ArrayList<Integer>();
+		uglys.add(1);
 		int min=1;
 		for(int i=1;i<n;i++){
 			int n1=uglys.get(c1)*2;
