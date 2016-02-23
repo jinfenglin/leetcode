@@ -22,7 +22,7 @@ public class Solution {
 			if(dp[start][i]){
 				List<List<String>> tmp=DFS(s,dp,i+1);
 				for(List<String> sol:tmp){
-					tmp.add(s.subString(start,i+1));
+					tmp.add(s.substring(start,i+1));
 					res.add(tmp);
 				}
 			}
