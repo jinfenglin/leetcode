@@ -18,6 +18,6 @@ SLOW:
 -Word Search 2(Using trie tree, while should integrate the search process with this function)
 -different ways to add parentheses
 -merge k list(merge sort is faster)
-
+- Contruct tree form inorder and posorder. Too much recursion lead to TLE, which logically should be same.
 Not PASS:
 -Word Break 2. Using DP+Backtracing, TLE for some reason
