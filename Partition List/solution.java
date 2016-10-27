@@ -1,30 +1,33 @@
-tion for singly-linked list.
- * public class ListNode {
-  *     int val;
-   *     ListNode next;
-    *     ListNode(int x) { val = x; }
-     * }
-      */
-      public class Solution {
-          public ListNode partition(ListNode head, int x) {
-	          ListNode lessHead= new ListNode(0);
-		          ListNode greaterHead= new ListNode(0);
-			          ListNode lessPtr=lessHead;
-				          ListNode greaterPtr = greaterHead;
-					          while(head!=null){
-						              if(head.val<x){
-							                      lessPtr.next=head;
-									                      head=head.next;
-											                      lessPtr=lessPtr.next;
-													                      lessPtr.next=null;
-															                  }else{
-																	                  greaterPtr.next=head;
-																			                  head=head.next;
-																					                  greaterPtr=greaterPtr.next;
-																							                  greaterPtr.next=null;
-																									              }
-																										              }
-																											              lessPtr.next=greaterHead.next;
-																												              return lessHead.next;
-																													          }
-																														  }
+public class Solution {
+	public ListNode partition(ListNode head, int x) {
+		ListNode small,large,sCur,lCur;
+		small=new ListNode(0);
+		large=new ListNode(0);
+		sCur=small;
+		lCur=large;
+		int count=0;
+		while(head!=null){
+			if(head.val<x){
+				sCur.next=head;
+				sCur=sCur.next;
+				sCur.next=null;
+			}else if(head.val>x){
+				lCur.next=head;
+				lCur=lCur.next;
+				lCur.next=null;
+			}else{
+				count++;
+			}
+			head=head.next;
+		}
+		ListNode equals=new ListNode(0);
+		ListNode eCur=head;
+		for(int i=0;i<count;i++){
+			eCur.next=new ListNode(x);
+			eCur=eCur.next;
+		}
+		sCur.next=equals.next;
+		eCur.next=large.next;
+		return small.next;
+	}
+}
