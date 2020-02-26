@@ -1,23 +1,28 @@
-Contains Solutions for leetcode. All case tested and accepted except:
--Wordladder(need to build the graph first, simply bit flipping don't work)
--3Sum
--Insert Interval (TLE, it is O(n) algorithm but need to avoid merging for every interval)
+LeetCode 2020
+===
 
-Blur Logic:
-SortList(have difficulties to deal with link relation between nodes, the solution is not elegant enough)
-Buy and sell stock 4
-Basic Cal(It is unbelievable that such a simple problem takes so much time)
-Valid Number
 
-SLOW:
--Combination Sum
--Binary Tree zigzag level order traverse( because I go through the deque for another time to generate the next layer which could be avoided)
--Palindrome partion(because keep copys of failed searching)
--Insertion sort, logic is a chaose, make 3 condition more clear.
--Populating Next Right Pointers in Each Node II(I used recursion)
--Word Search 2(Using trie tree, while should integrate the search process with this function)
--different ways to add parentheses
--merge k list(merge sort is faster)
-- Contruct tree form inorder and posorder. Too much recursion lead to TLE, which logically should be same.
-Not PASS:
--Word Break 2. Using DP+Backtracing, TLE for some reason
+<!--| ID|Time|Note|Optimal Solution|-->
+
+1007 Minimum Domino Rotations For Equal Row  
+___
+
+时间: 25min  
+错误内容：  
+* Missed the case that column can have same numbers  
+* Not optimal memory my solution have O(N) memory the optimal need O(1)  
+最优解思路： 
+可被替换的值必须来自A或者B. 遍历数组,如果每个位置上的数都等于A[0] (B[0]) 那么存在结果，
+最小的替换数量根据A[0] (B[0])的存在数量而定.
+
+
+843. Guess the Word
+---
+时间: ?
+错误内容：
+* 建立了一pairwise的table. 对于单次计算这样的table是不需要的
+* 思路错了.不能用DFS的思路来解决它, 应该用binary search的方式来解因为这个search需要根据条件来不断缩小区间
+* code 写的过于冗长. 最优解的代码非常的优雅, 主要是因为2点：
+    * 用循环代替了递归
+    * pythonic的写法 用slice的写法来代替了for 循环
+    * 用lambda来代替的小型的函数
